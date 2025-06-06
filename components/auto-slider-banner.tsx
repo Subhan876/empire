@@ -1,64 +1,83 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 
-const images = [
-  "https://64.media.tumblr.com/db8472cfbb89a155148003b053d5f3de/4d6d987e0cee7307-8e/s400x225/158142e8e876044a6191733a02f6ee5ac1643b58.gif",
-  "https://i.pinimg.com/originals/14/f4/35/14f435eaaf8d107cca5055ce150eaf47.gif",
+const slides = [
+  {
+    id: 1,
+    image: "/images/banner-1.jpg",
+    title: "New Collection",
+    description: "Discover our latest streetwear collection",
+    cta: "Shop Now",
+  },
+  {
+    id: 2,
+    image: "/images/banner-2.jpg",
+    title: "Premium Quality",
+    description: "Experience comfort and style",
+    cta: "Learn More",
+  },
+  {
+    id: 3,
+    image: "/images/banner-3.jpg",
+    title: "Limited Edition",
+    description: "Exclusive designs for the modern lifestyle",
+    cta: "View Collection",
+  },
 ]
 
-export function AutoSliderBanner() {
-  const [currentIndex, setCurrentIndex] = useState(0)
+export const AutoSliderBanner = () => {
+  const [currentSlide, setCurrentSlide] = useState(0)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-    }, 5000) // Change image every 5 seconds
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length)
+    }, 5000)
 
-    return () => clearInterval(interval)
+    return () => clearInterval(timer)
   }, [])
 
-  const handleShopClick = () => {
-    const productSection = document.getElementById("product-section")
-    if (productSection) {
-      productSection.scrollIntoView({ behavior: "smooth" })
-    }
-  }
-
   return (
-    <div className="relative w-full h-screen overflow-hidden">
-      {images.map((src, index) => (
+    <div className="relative h-[60vh] w-full overflow-hidden">
+      {slides.map((slide, index) => (
         <div
-          key={src}
-          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ${
-            index === currentIndex ? "opacity-100" : "opacity-0"
+          key={slide.id}
+          className={`absolute inset-0 transition-opacity duration-1000 ${
+            index === currentSlide ? "opacity-100" : "opacity-0"
           }`}
         >
           <Image
-            src={src}
-            alt={`Banner ${index + 1}`}
+            src={slide.image}
+            alt={slide.title}
             fill
-            style={{ objectFit: "cover" }}
+            className="object-cover"
             priority={index === 0}
-            unoptimized
           />
+          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center text-white">
+              <h2 className="text-4xl md:text-6xl font-bold mb-4">{slide.title}</h2>
+              <p className="text-lg md:text-xl mb-8">{slide.description}</p>
+              <Button size="lg" variant="secondary">
+                {slide.cta}
+              </Button>
+            </div>
+          </div>
         </div>
       ))}
-      <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center">
-        <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl text-gray-100 text-center mb-4">
-          Premium Streetwear
-        </h1>
-        <p className="text-xl text-gray-300 text-center mb-8">Elevate Your Style</p>
-        <Button 
-          onClick={handleShopClick} 
-          size="lg" 
-          variant="outline"
-          className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 transition-all duration-300"
-        >
-          SHOP NOW
-        </Button>
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            className={`w-3 h-3 rounded-full transition-colors ${
+              index === currentSlide ? "bg-white" : "bg-white/50"
+            }`}
+            onClick={() => setCurrentSlide(index)}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
       </div>
     </div>
   )

@@ -1,46 +1,36 @@
 "use client"
 
 import Image from "next/image"
-import { useState } from "react"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 
 interface HoodieCardProps {
-  name: string
+  title: string
   price: number
-  image1: string
-  image2: string
+  image: string
+  description: string
 }
 
-export function HoodieCard({ name, price, image1, image2 }: HoodieCardProps) {
-  const [isHovered, setIsHovered] = useState(false)
-
+export const HoodieCard = ({ title, price, image, description }: HoodieCardProps) => {
   return (
-    <div className="bg-dark-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-      <div
-        className="relative aspect-square overflow-hidden"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+    <Card className="overflow-hidden">
+      <div className="relative aspect-square">
         <Image
-          src={isHovered ? image2 : image1}
-          alt={name}
+          src={image}
+          alt={title}
           fill
-          className="object-cover transition-all duration-500 hover:scale-105"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-          unoptimized
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
       </div>
-      <div className="p-6">
-        <h3 className="text-lg font-semibold text-gray-100 mb-2">{name}</h3>
-        <p className="text-gray-400 mb-4 text-xl font-bold">${price.toFixed(2)}</p>
-        <Button 
-          className="w-full bg-white text-black hover:bg-gray-200 transition-colors duration-300 font-medium"
-          size="lg"
-        >
-          Add to Cart
-        </Button>
-      </div>
-    </div>
+      <CardContent className="p-4">
+        <h3 className="text-lg font-semibold">{title}</h3>
+        <p className="text-sm text-muted-foreground mt-1">{description}</p>
+        <p className="text-lg font-bold mt-2">${price.toFixed(2)}</p>
+      </CardContent>
+      <CardFooter className="p-4 pt-0">
+        <Button className="w-full">Add to Cart</Button>
+      </CardFooter>
+    </Card>
   )
 }

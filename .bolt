@@ -1,0 +1,11 @@
+{
+  "name": "clothing-store",
+  "type": "nextjs",
+  "build": {
+    "command": "pnpm build",
+    "output": ".next"
+  },
+  "env": {
+    "NODE_ENV": "production"
+  }
+} 
