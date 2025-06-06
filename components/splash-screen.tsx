@@ -31,7 +31,7 @@ export function SplashScreen() {
           setTimeout(() => setIsComplete(true), 500) // Delay before hiding splash screen
           return 100
         }
-        return prev + 1
+        return prev + 2 // Faster loading
       })
     }, 30)
 
@@ -48,26 +48,34 @@ export function SplashScreen() {
         isComplete ? "opacity-0 pointer-events-none" : "opacity-100",
       )}
     >
-      <div className="relative w-48 h-48 mb-8">
+      <div className="relative w-48 h-48 mb-8 animate-pulse">
         <Image
           src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo%20sdfm-gDlxg0zxe6wVV9o5cISteykVa4LQhz.png"
           alt="SDFM 2520"
           fill
           className="object-contain"
           priority
+          unoptimized
         />
       </div>
 
       {/* Matrix-style loading text */}
-      <div className="font-mono text-white mb-4 h-6">{`LOADING_SYSTEM: ${matrixText}`}</div>
+      <div className="font-mono text-white mb-4 h-6 text-lg tracking-wider">
+        {`LOADING_SYSTEM: ${matrixText}`}
+      </div>
 
       {/* Progress bar container */}
-      <div className="w-64 h-1 bg-dark-400 rounded-full overflow-hidden">
-        <div className="h-full bg-white transition-all duration-100 ease-out" style={{ width: `${progress}%` }} />
+      <div className="w-64 h-2 bg-dark-400 rounded-full overflow-hidden mb-2">
+        <div 
+          className="h-full bg-gradient-to-r from-white to-gray-300 transition-all duration-100 ease-out rounded-full" 
+          style={{ width: `${progress}%` }} 
+        />
       </div>
 
       {/* Progress percentage */}
-      <div className="mt-2 font-mono text-sm text-white">{`${progress}%`}</div>
+      <div className="mt-2 font-mono text-sm text-white tracking-wider">
+        {`${progress}%`}
+      </div>
     </div>
   )
 }

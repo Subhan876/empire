@@ -37,11 +37,12 @@ export function AutoSliderBanner() {
           }`}
         >
           <Image
-            src={src || "/placeholder.svg"}
+            src={src}
             alt={`Banner ${index + 1}`}
             fill
             style={{ objectFit: "cover" }}
-            priority
+            priority={index === 0}
+            unoptimized
           />
         </div>
       ))}
@@ -50,8 +51,13 @@ export function AutoSliderBanner() {
           Premium Streetwear
         </h1>
         <p className="text-xl text-gray-300 text-center mb-8">Elevate Your Style</p>
-        <Button onClick={handleShopClick} size="lg" variant="outline">
-          SHOP
+        <Button 
+          onClick={handleShopClick} 
+          size="lg" 
+          variant="outline"
+          className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 transition-all duration-300"
+        >
+          SHOP NOW
         </Button>
       </div>
     </div>

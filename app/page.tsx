@@ -34,15 +34,22 @@ export default function Home() {
   ]
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
+    <main className="flex min-h-screen flex-col">
       {/* Full-screen Auto-sliding Banner */}
       <AutoSliderBanner />
 
       {/* Product Section */}
-      <section id="product-section" className="w-full py-12 md:py-24 bg-dark-900">
+      <section id="product-section" className="w-full py-16 md:py-24 bg-dark-900 min-h-screen">
         <div className="container mx-auto px-4">
-          <h2 className="mb-8 text-3xl font-bold text-center text-gray-100">Latest Collection</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-100 mb-4">
+              Latest Collection
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Discover our premium streetwear collection featuring the finest materials and cutting-edge designs
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             {hoodies.map((hoodie) => (
               <HoodieCard key={hoodie.id} {...hoodie} />
             ))}
